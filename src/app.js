@@ -2,35 +2,39 @@ const express = require('express');
 
 const app  = express();
 
-app.get("/user",(req,res) =>{
-  res.send({"firstName": "ravi" , "lastname": "kumar"})
-})
+app.get("/user",
+  [(req,res,next) => {
+  console.log("Handling user 1");
+  
+  next();
+},
+ (req,res,next) => {  
+  console.log("Handling user 2");
+  
+  // res.send("User 2 created succesfully")
+    next();
 
-app.post("/user",(req,res) =>{
-  console.log("Save data to the database");
-  res.send("Data successfully saved to the database")
-})
+},
+ (req,res,next) => {  
+  
+  console.log("Handling user 3");
+      next();
 
-app.delete("/user",(req,res)=> {
-  res.send("Data successfully deleted")
-})
+  
+  // res.send("User 3 created succesfully")
+},
+ (req,res,next) => {  
+  
+  console.log("Handling user 4");
+  next();
+  
+  res.send("User 4 created succesfully")
+}]
+)
 
-app.use("/test", (req, res) => {
-  res.send("Hello world from the server")
-})
 
-// app.use("/", (req, res) => {
-//   res.send("Namaste from from the Dashboard")
-// })
-// app.use("/hello/2", (req, res) => {
-//   res.send("Abra ka dabra")
-// })
-
-// app.use("/hello", (req, res) => {
-//   res.send("Hello hello hello")
-// })
 
 
 app.listen(3000,() => {
-  console.log("Server is succuessfully running on port 3000")
+  console.log("Server is succesfully running on port 3000")
 })
